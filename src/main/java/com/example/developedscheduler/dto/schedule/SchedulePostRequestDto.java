@@ -1,9 +1,9 @@
-package com.example.developedscheduler.dto;
+package com.example.developedscheduler.dto.schedule;
 
 import lombok.Getter;
 
 @Getter
-public class ScheduleUpdateRequestDto {
+public class SchedulePostRequestDto {
 
     private final String title;
 
@@ -11,10 +11,10 @@ public class ScheduleUpdateRequestDto {
 
     private final String username;
 
-    public ScheduleUpdateRequestDto(String title, String contents, String username) {
+    public SchedulePostRequestDto(String title, String contents, String username) {
         this.title = title;
         this.contents = contents;
         this.username = username;
     }
-}
 
+}

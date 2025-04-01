@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @Entity
 @Table(name="schedule")
+//@DynamicInsert
 public class Schedule extends ScheduleBaseEntity {
 
     @Id
@@ -21,9 +22,9 @@ public class Schedule extends ScheduleBaseEntity {
 //    private String contents = "내용 없음";
     private String contents;
 
-
-    @Column(nullable = false)
-    private String username;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Schedule() {
     }
@@ -31,13 +32,13 @@ public class Schedule extends ScheduleBaseEntity {
     public Schedule(String title, String contents, String username) {
         this.title = title;
         this.contents = contents;
-        this.username = username;
+//        this.username = username;
     }
 
     public void updateSchedule(String title, String contents, String username) {
 
         this.title = title;
         this.contents = contents;
-        this.username = username;
+//        this.username = username;
     }
 }

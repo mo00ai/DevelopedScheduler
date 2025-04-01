@@ -1,8 +1,8 @@
 package com.example.developedscheduler.controller;
 
-import com.example.developedscheduler.dto.SchedulePostRequestDto;
-import com.example.developedscheduler.dto.ScheduleResponseDto;
-import com.example.developedscheduler.dto.ScheduleUpdateRequestDto;
+import com.example.developedscheduler.dto.schedule.SchedulePostRequestDto;
+import com.example.developedscheduler.dto.schedule.ScheduleResponseDto;
+import com.example.developedscheduler.dto.schedule.ScheduleUpdateRequestDto;
 import com.example.developedscheduler.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/schedule")
+@RequestMapping("/schedules")
 @RequiredArgsConstructor
 public class ScheduleController {
 
