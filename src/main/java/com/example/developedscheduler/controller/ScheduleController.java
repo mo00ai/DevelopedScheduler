@@ -22,7 +22,7 @@ public class ScheduleController {
     @PostMapping
     public ResponseEntity<ScheduleResponseDto> saveSchedule(@RequestBody SchedulePostRequestDto requestDto) {
 
-        ScheduleResponseDto scheduleResponseDto = scheduleService.save(requestDto.getTitle(), requestDto.getContents(), requestDto.getUsername());
+        ScheduleResponseDto scheduleResponseDto = scheduleService.save(requestDto.getTitle(), requestDto.getContents(), requestDto.getUsername(), requestDto.getPassword());
 
         return new ResponseEntity<>(scheduleResponseDto,HttpStatus.CREATED);
     }
@@ -58,16 +58,16 @@ public class ScheduleController {
     @PatchMapping("/{id}")
     public ResponseEntity<ScheduleResponseDto> updateSchedule(@PathVariable Long id, @RequestBody ScheduleUpdateRequestDto requestDto) {
 
-        ScheduleResponseDto scheduleResponseDto = scheduleService.updateSchedule(id, requestDto.getTitle(),requestDto.getContents());
+        ScheduleResponseDto scheduleResponseDto = scheduleService.updateSchedule(id, requestDto.getTitle(),requestDto.getContents(),requestDto.getPassword());
 
         return new ResponseEntity<>(scheduleResponseDto,HttpStatus.OK);
     }
 
     //일정삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id, @RequestParam String password) {
 
-        scheduleService.deleteSchedule(id);
+        scheduleService.deleteSchedule(id, password);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

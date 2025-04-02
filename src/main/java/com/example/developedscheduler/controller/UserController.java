@@ -1,5 +1,6 @@
 package com.example.developedscheduler.controller;
 
+import com.example.developedscheduler.dto.user.UpdateUserRequestDto;
 import com.example.developedscheduler.dto.user.UserRequestDto;
 import com.example.developedscheduler.dto.user.UserResponseDto;
 import com.example.developedscheduler.service.UserService;
@@ -21,7 +22,7 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<UserResponseDto> singUpUser(@RequestBody UserRequestDto requestDto) {
 
-        UserResponseDto userResponseDto = userService.signUpUser(requestDto.getName(), requestDto.getAddress());
+        UserResponseDto userResponseDto = userService.signUpUser(requestDto.getName(), requestDto.getEmail(), requestDto.getPassword());
 
         return new ResponseEntity<>(userResponseDto,HttpStatus.CREATED);
     }
@@ -45,18 +46,18 @@ public class UserController {
 
     //특정 회원 수정
     @PatchMapping("/{id}")
-    public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long id, @RequestBody UserRequestDto requestDto) {
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long id, @RequestBody UpdateUserRequestDto requestDto) {
 
-        UserResponseDto userResponseDto = userService.updateUser(id, requestDto.getName(), requestDto.getAddress());
+        UserResponseDto userResponseDto = userService.updateUser(id, requestDto.getName(), requestDto.getEmail(),requestDto.getOldPassword(), requestDto.getNewPassword());
 
         return new ResponseEntity<>(userResponseDto,HttpStatus.OK);
     }
 
     //회원 탈퇴 -> 모든 게시글 삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id, @RequestParam String password) {
 
-        userService.deleteUser(id);
+        userService.deleteUser(id, password);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

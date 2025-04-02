@@ -8,10 +8,13 @@ public class UserRequestDto {
 
     private final String name;
 
-    private final String address;
+    private final String email;
 
-    public UserRequestDto(String name, String address) {
+    private final String password;
+
+    public UserRequestDto(String name, String email, String password) {
         this.name = name;
-        this.address = address;
+        this.email = email;
+        this.password = password;
     }
 }

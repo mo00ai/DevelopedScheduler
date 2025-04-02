@@ -11,16 +11,16 @@ public class UserResponseDto {
 
     private final String name;
 
-    private final String address;
+    private final String email;
 
-    public UserResponseDto(Long id, String name, String address) {
+    public UserResponseDto(Long id, String name, String email) {
         this.id = id;
         this.name = name;
-        this.address = address;
+        this.email = email;
     }
 
     //유저 엔티티 객체를 바로 Dto로 바꿀 수 있게 하는 메서드
     public static UserResponseDto toDto(User user) {
-        return new UserResponseDto(user.getId(), user.getName(), user.getAddress());
+        return new UserResponseDto(user.getId(), user.getName(), user.getEmail());
     }
 }

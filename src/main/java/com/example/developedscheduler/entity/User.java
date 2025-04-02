@@ -16,20 +16,25 @@ public class User extends ScheduleBaseEntity{
     private String name;
 
     @Column(nullable = true, length = 50)
-    private String address;
+    private String email;
+
+    @Column(nullable = false, length = 15)
+    private String password;
 
     public User() {
     }
 
-    public User(String name, String address) {
+    public User(String name, String email,String password) {
         this.name = name;
-        this.address = address;
+        this.email = email;
+        this.password = password;
     }
 
     //User 수정 시 사용하는 세터
-    public void updateUser(String name, String address) {
+    public void updateUser(String name, String email, String password) {
         this.name = name;
-        this.address = address;
+        this.email = email;
+        this.password = password;
     }
 
 }

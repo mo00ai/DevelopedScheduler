@@ -22,7 +22,7 @@ public class ScheduleService {
 
 
     //스케줄 생성 서비스
-    public ScheduleResponseDto save(String title, String contents, String username) {
+    public ScheduleResponseDto save(String title, String contents, String username, String password) {
 
         //사용자가 필수값 입력했는지 확인
         if (title == null || username == null) {
@@ -36,6 +36,10 @@ public class ScheduleService {
 
         //작성자명으로 유저 찾기
         User foundUser = userRepository.findUserByNameOrElseThrow(username);
+
+        if(!foundUser.getPassword().equals(password)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"비밀번호가 틀렸습니다.");
+        }
 
         //일정 생성
         Schedule schedule = new Schedule(title, contents);
@@ -70,7 +74,7 @@ public class ScheduleService {
     }
 
     @Transactional
-    public ScheduleResponseDto updateSchedule(Long id, String title, String contents) {
+    public ScheduleResponseDto updateSchedule(Long id, String title, String contents, String password) {
 
         //일정이 있는지 조회
         Schedule foundSchedule = scheduleRepository.findByIdOrElseThrow(id);
@@ -85,18 +89,35 @@ public class ScheduleService {
             contents = foundSchedule.getContents();
         }
 
+        //작성한 유저 확인
+        User user = userRepository.findUserByNameOrElseThrow(foundSchedule.getUser().getName());
+
+        //비밀번호가 같을 시에만 수정 가능
+        if(!user.getPassword().equals(password)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"비밀번호가 틀렸습니다.");
+        }
+
         //일정 수정
         foundSchedule.updateSchedule(title, contents);
 
         return ScheduleResponseDto.toDto(foundSchedule);
     }
 
-    public void deleteSchedule(Long id) {
+    @Transactional
+    public void deleteSchedule(Long id, String password) {
 
         //아이디가 있는지 확인
-        Schedule foundBoard = scheduleRepository.findByIdOrElseThrow(id);
+        Schedule foundSchedule= scheduleRepository.findByIdOrElseThrow(id);
+
+        //작성한 유저 확인
+        User user = userRepository.findUserByNameOrElseThrow(foundSchedule.getUser().getName());
+
+        //비밀번호가 같을 시에만 수정 가능
+        if(!user.getPassword().equals(password)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"비밀번호가 틀렸습니다.");
+        }
 
         //일정 삭제
-        scheduleRepository.delete(foundBoard);
+        scheduleRepository.delete(foundSchedule);
     }
 }
