@@ -18,3 +18,7 @@ public class SchedulePostRequestDto {
     }
 
 }
+
+
+//사용자의 요청을 서버에서 바꾸면 원치않게 에러
+// setter가 열려있음 남들이 바꿀 수 있음

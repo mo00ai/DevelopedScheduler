@@ -29,10 +29,10 @@ public class Schedule extends ScheduleBaseEntity {
     public Schedule() {
     }
 
-    public Schedule(String title, String contents, String username) {
+
+    public Schedule(String title, String contents) {
         this.title = title;
         this.contents = contents;
-//        this.username = username;
     }
 
     public void updateSchedule(String title, String contents, String username) {
@@ -40,5 +40,9 @@ public class Schedule extends ScheduleBaseEntity {
         this.title = title;
         this.contents = contents;
 //        this.username = username;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

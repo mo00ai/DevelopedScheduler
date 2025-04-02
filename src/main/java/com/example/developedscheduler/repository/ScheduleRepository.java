@@ -10,7 +10,7 @@ import java.util.List;
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
 
-    List<Schedule> findByUsername(String username);
+    List<Schedule> findByUserName(String username);
 
     default Schedule findByIdOrElseThrow(Long id) {
         return findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"존재하지 않는 id 입니다. id = "+id));

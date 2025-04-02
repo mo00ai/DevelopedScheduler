@@ -1,10 +1,12 @@
 package com.example.developedscheduler.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "user")
-public class User {
+public class User extends ScheduleBaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +25,5 @@ public class User {
         this.name = name;
         this.address = address;
     }
+
 }
