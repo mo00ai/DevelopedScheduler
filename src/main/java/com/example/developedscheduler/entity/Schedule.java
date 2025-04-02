@@ -3,6 +3,8 @@ package com.example.developedscheduler.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+
+//스케줄 엔티티
 @Getter
 @Entity
 @Table(name="schedule")
@@ -35,13 +37,13 @@ public class Schedule extends ScheduleBaseEntity {
         this.contents = contents;
     }
 
-    public void updateSchedule(String title, String contents, String username) {
+    public void updateSchedule(String title, String contents) {
 
         this.title = title;
         this.contents = contents;
-//        this.username = username;
     }
 
+    //스케줄에 User를 들록해줄 때 쓰는 setter
     public void setUser(User user) {
         this.user = user;
     }

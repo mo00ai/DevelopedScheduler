@@ -3,6 +3,7 @@ package com.example.developedscheduler.dto.schedule;
 import com.example.developedscheduler.entity.Schedule;
 import lombok.Getter;
 
+//일정 응답 dto
 @Getter
 public class ScheduleResponseDto {
 

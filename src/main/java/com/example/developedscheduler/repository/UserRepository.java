@@ -1,42 +1,40 @@
 package com.example.developedscheduler.repository;
 
 import com.example.developedscheduler.entity.User;
-import jakarta.persistence.Id;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Optional;
 
 
-public interface UserRepository extends JpaRepository<User, Id> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    List<User> findByNameIsLike(String name);
+//    @Query("select substring(u.name,0,:length) from User u where u.name = :name")
+//    List<String> findNameListBySubstring(@Param("name") String name, @Param("length") int length);
 
-    @Query("select substring(u.name,0,:length) from User u where u.name = :name")
-    List<String> findNameListBySubstring(@Param("name") String name, @Param("length") int length);
+//    @Query("select count(u.name) from User u where substring(u.name, 1, :length) = :name")
+//    int countUserByName(@Param("name") String name, @Param("length") int length);
 
+//    List<User> findByNameIsLike(String name);
 
-    boolean existsUserByName(String name);
+  // --------위는 나중에 복습용으로 놔두었습니다..--------사용하진 않습니다
 
-
-    @Query("select count(u.name) from User u where substring(u.name, 1, :length) = :name")
-    int countUserByName(@Param("name") String name, @Param("length") int length);
-
-    List<User> name(String name);
-
+    //유저명이 존재하는지 확인. 없을 시 예외처리
     default User findUserByNameOrElseThrow(String username) {
 
         return findUserByName(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 유저명입니다."));
     }
 
+    //유저명으로 유저 찾기. Optional 유저 객체 반환
     Optional<User> findUserByName(String username);
 
+    //유저 id가 존재하는지 확인, 없을시 예외처리
+    default User findByIdOrElseThrow(Long id) {
+        return findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 유저 아이디입니다."));
+    }
 
-//    default User findByIdOrElseThrow(Long id) {
-//        return findById(id).orElseThrow()
-//    }
+    //유저명이 존재하는지 확인하는 boolean 메서드
+    boolean existsUserByName(String name);
+
 }

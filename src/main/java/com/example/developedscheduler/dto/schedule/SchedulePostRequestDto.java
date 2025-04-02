@@ -2,6 +2,7 @@ package com.example.developedscheduler.dto.schedule;
 
 import lombok.Getter;
 
+//일정 생성용 요청 dto
 @Getter
 public class SchedulePostRequestDto {
 

@@ -1,6 +1,6 @@
 package com.example.developedscheduler.controller;
 
-import com.example.developedscheduler.dto.user.SignUpRequestDto;
+import com.example.developedscheduler.dto.user.UserRequestDto;
 import com.example.developedscheduler.dto.user.UserResponseDto;
 import com.example.developedscheduler.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,20 +17,50 @@ public class UserController {
 
     private final UserService userService;
 
+    //회원 생성(회원가입)
     @PostMapping("/signup")
-    public ResponseEntity<UserResponseDto> singUpUser(@RequestBody SignUpRequestDto requestDto) {
+    public ResponseEntity<UserResponseDto> singUpUser(@RequestBody UserRequestDto requestDto) {
 
         UserResponseDto userResponseDto = userService.signUpUser(requestDto.getName(), requestDto.getAddress());
 
         return new ResponseEntity<>(userResponseDto,HttpStatus.CREATED);
     }
 
+    //회원 전체 조회
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> findAllUsers() {
         List<UserResponseDto> userResponseDtoList = userService.findAllUsers();
 
         return new ResponseEntity<>(userResponseDtoList,HttpStatus.OK);
     }
+
+    //특정 회원 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDto> findUserById(@PathVariable Long id) {
+
+        UserResponseDto userResponseDto = userService.findUserById(id);
+
+        return new ResponseEntity<>(userResponseDto,HttpStatus.OK);
+    }
+
+    //특정 회원 수정
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long id, @RequestBody UserRequestDto requestDto) {
+
+        UserResponseDto userResponseDto = userService.updateUser(id, requestDto.getName(), requestDto.getAddress());
+
+        return new ResponseEntity<>(userResponseDto,HttpStatus.OK);
+    }
+
+    //회원 탈퇴 -> 모든 게시글 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+
+        userService.deleteUser(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 
 }

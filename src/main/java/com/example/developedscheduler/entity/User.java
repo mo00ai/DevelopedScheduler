@@ -26,4 +26,10 @@ public class User extends ScheduleBaseEntity{
         this.address = address;
     }
 
+    //User 수정 시 사용하는 세터
+    public void updateUser(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
+
 }
