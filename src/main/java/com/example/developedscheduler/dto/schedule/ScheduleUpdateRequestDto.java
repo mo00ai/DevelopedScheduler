@@ -10,12 +10,9 @@ public class ScheduleUpdateRequestDto {
 
     private final String contents;
 
-    private final String password;
-
-    public ScheduleUpdateRequestDto(String title, String contents, String password) {
+    public ScheduleUpdateRequestDto(String title, String contents) {
         this.title = title;
         this.contents = contents;
-        this.password = password;
     }
 }
 

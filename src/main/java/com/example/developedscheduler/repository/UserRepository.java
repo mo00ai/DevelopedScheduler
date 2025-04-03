@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -37,4 +38,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //유저명이 존재하는지 확인하는 boolean 메서드
     boolean existsUserByName(String name);
 
+    List<User> findByEmailAndPassword(String email, String password);
+
+    List<User> findUserByEmailAndPassword(String email, String password);
+
+    Optional<User> findIdByEmailAndPassword(String email, String password);
+
+    default User findIdByEmailAndPasswordOrElseThrow(String email, String password){
+        return findIdByEmailAndPassword(email,password).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 이메일 또는 비밀번호입니다. 재입력해주세요."));
+    }
+
+    boolean existsUserByEmail(String email);
+
+    Long id(Long id);
 }

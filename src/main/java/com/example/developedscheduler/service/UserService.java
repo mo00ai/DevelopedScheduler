@@ -24,9 +24,16 @@ public class UserService {
         //사용자가 작성한 이름이 db에 있는지 확인 boolean 반환
         boolean existsUserByName = userRepository.existsUserByName(name);
 
+        //사용자 이메일이 이미 존재하는지 확인
+        boolean existsUserByEmail = userRepository.existsUserByEmail(email);
+
         //있다면 예외 날리기
         if(existsUserByName) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "중복 이름이 이미 존재합니다. 다른 이름을 입력하세요");
+        }
+
+        if(existsUserByEmail) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"중복 이메일이 이미 존재합니다. 다른 이메일을 입력하세요.");
         }
 
         //없다면 새로운 유저 생성

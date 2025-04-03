@@ -10,15 +10,10 @@ public class SchedulePostRequestDto {
 
     private final String contents;
 
-    private final String username;
 
-    private final String password;
-
-    public SchedulePostRequestDto(String title, String contents, String username, String password) {
+    public SchedulePostRequestDto(String title, String contents) {
         this.title = title;
         this.contents = contents;
-        this.username = username;
-        this.password = password;
     }
 
 }

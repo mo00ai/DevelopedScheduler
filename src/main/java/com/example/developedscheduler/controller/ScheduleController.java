@@ -1,9 +1,11 @@
 package com.example.developedscheduler.controller;
 
+import com.example.developedscheduler.common.SessionUtils;
 import com.example.developedscheduler.dto.schedule.SchedulePostRequestDto;
 import com.example.developedscheduler.dto.schedule.ScheduleResponseDto;
 import com.example.developedscheduler.dto.schedule.ScheduleUpdateRequestDto;
 import com.example.developedscheduler.service.ScheduleService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +22,9 @@ public class ScheduleController {
 
     //일정 생성
     @PostMapping
-    public ResponseEntity<ScheduleResponseDto> saveSchedule(@RequestBody SchedulePostRequestDto requestDto) {
+    public ResponseEntity<ScheduleResponseDto> saveSchedule(@RequestBody SchedulePostRequestDto requestDto, HttpSession session) {
 
-        ScheduleResponseDto scheduleResponseDto = scheduleService.save(requestDto.getTitle(), requestDto.getContents(), requestDto.getUsername(), requestDto.getPassword());
+        ScheduleResponseDto scheduleResponseDto = scheduleService.save(requestDto.getTitle(), requestDto.getContents(), session);
 
         return new ResponseEntity<>(scheduleResponseDto,HttpStatus.CREATED);
     }
@@ -56,20 +58,26 @@ public class ScheduleController {
 
     //일정수정
     @PatchMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> updateSchedule(@PathVariable Long id, @RequestBody ScheduleUpdateRequestDto requestDto) {
+    public ResponseEntity<ScheduleResponseDto> updateSchedule(@PathVariable Long id, @RequestBody ScheduleUpdateRequestDto requestDto, HttpSession session) {
 
-        ScheduleResponseDto scheduleResponseDto = scheduleService.updateSchedule(id, requestDto.getTitle(),requestDto.getContents(),requestDto.getPassword());
+        SessionUtils.checkSessionId(id,session);
+
+        ScheduleResponseDto scheduleResponseDto = scheduleService.updateSchedule(id, requestDto.getTitle(),requestDto.getContents());
 
         return new ResponseEntity<>(scheduleResponseDto,HttpStatus.OK);
     }
 
     //일정삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id, @RequestParam String password) {
+    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id, HttpSession session) {
 
-        scheduleService.deleteSchedule(id, password);
+        SessionUtils.checkSessionId(id,session);
+
+        scheduleService.deleteSchedule(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 
 }
