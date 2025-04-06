@@ -13,9 +13,12 @@ Spring Boot와 JPA 기반으로 일정 정보를 3 Layer Ahchitecture 구조로 
 - `Architecture` : 3 Layer (Controller - Service - Repository)
 
 ## 3️⃣ 프로그램 구조
-- HTTP API 명세서  
+- HTTP API 명세서
+  https://documenter.getpostman.com/view/31225592/2sB2cUBiAA
  
-- ERD  
+- ERD
+  ![image](https://github.com/user-attachments/assets/fbd6614b-cb20-40ec-9c62-143df7f8efbf)
+
 
 
 ## 4️⃣ 주요 기능
