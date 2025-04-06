@@ -18,7 +18,7 @@ public class User extends ScheduleBaseEntity{
     @Column(nullable = false, length = 50)
     private String email;
 
-    @Column(nullable = false, length = 15)
+    @Column(nullable = false)
     private String password;
 
     public User() {

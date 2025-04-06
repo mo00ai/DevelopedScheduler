@@ -1,5 +1,6 @@
 package com.example.developedscheduler.domain.service;
 
+import com.example.developedscheduler.domain.config.PasswordEncoder;
 import com.example.developedscheduler.domain.dto.user.UserResponseDto;
 import com.example.developedscheduler.domain.entity.User;
 import com.example.developedscheduler.domain.repository.ScheduleRepository;
@@ -18,6 +19,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final ScheduleRepository scheduleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserResponseDto signUpUser(String name, String email, String password) {
 
@@ -37,7 +39,7 @@ public class UserService {
         }
 
         //없다면 새로운 유저 생성
-        User user = new User(name, email, password);
+        User user = new User(name, email, passwordEncoder.encode(password));
 
         //유저 저장
         User savedUser = userRepository.save(user);
@@ -77,11 +79,9 @@ public class UserService {
             email = foundUser.getEmail();
         }
 
-        if(foundUser.getPassword().equals(oldPassword)) {
-            if(newPassword == null) {
-                foundUser.updateUser(name,email,oldPassword);
-            } else {
-                foundUser.updateUser(name,email,newPassword);
+        if(passwordEncoder.matches(oldPassword, foundUser.getPassword())) {
+            if(newPassword != null) {
+                foundUser.updateUser(name,email,passwordEncoder.encode(newPassword));
             }
         } else {
             throw new CustomException(ErrorCode.PASSWORD_INCORRECT);
@@ -97,7 +97,7 @@ public class UserService {
         //유저 있는지 확인
         User foundUser = userRepository.findByIdOrElseThrow(id);
 
-        if(!password.equals(foundUser.getPassword())) {
+        if(passwordEncoder.matches(password, foundUser.getPassword())) {
             throw new CustomException(ErrorCode.PASSWORD_INCORRECT);
         }
 

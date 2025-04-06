@@ -5,6 +5,7 @@ import com.example.developedscheduler.global.exception.CustomException;
 import com.example.developedscheduler.global.exception.ErrorCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -60,4 +61,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
         return findIdByEmailAndPassword(email,password).orElseThrow(()-> new CustomException(ErrorCode.LOGIN_FAIL));
     }
 
+
+    List<User> findPasswordByEmail(String email);
+
+    User findUserByEmail(String email);
 }
